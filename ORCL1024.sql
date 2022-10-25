@@ -15,7 +15,7 @@ from student;
 SELECT SUBSTR(jumin, 1,6), SUBSTRB(jumin,1,6), SUBSTR('한글',1,1),SUBSTRB('한글',1,3)
 FROM student;
 
---INSTR(대상컬럼,찾을문자,시작위치,몇번째)
+--INSTR(대상컬럼,찾을문자,시작위치,몇번째에 나오는?)
 SELECT tel,INSTR(tel,'-',1,1),INSTR(tel,')',1,1),SUBSTR(tel,INSTR(tel,'-',1,1)+1,4)
 FROM student;
 
@@ -314,5 +314,21 @@ FROM t_reg
 --WHERE REGEXP_LIKE(text, '^[0-9]'); --첫 글자가 숫자로 시작하는 케이스가 있나
 
 --WHERE REGEXP_LIKE(text, '[a-zA-Z]$'); --마지막 글자가 소문자든 대문자든 시작하는 케이스가 있나
-WHERE REGEXP_LIKE(text, '[0-9]$'); --마지막 글자가 숫자로 시작하는 케이스가 있나
+--WHERE REGEXP_LIKE(text, '[0-9]$'); --마지막 글자가 숫자로 시작하는 케이스가 있나
 --WHERE REGEXP_LIKE(text, '[0-9a-z]$'); --마지막 글자가 숫자/소문자 시작하는 케이스가 있나
+--WHERE REGEXP_LIKE(text, '^[^a-z]'); --첫 글자가 소문자로 시작하지 않는 케이스
+--WHERE REGEXP_LIKE(text, '^[^0-9]'); --첫 글자가 숫자가 아닌걸로 시작하는 케이스
+--WHERE REGEXP_LIKE(text, '^[^0-9a-z]'); --첫 글자가 숫자나 소문자가 아닌걸로 시작하는 케이스
+--WHERE REGEXP_LIKE(text, '[^a-z]'); --소문자'만' 들어있지 않는 케이스
+WHERE NOT REGEXP_LIKE(text, '[a-z]'); --NOT(소문자가 포함된 케이스를 찾아서) : 소문자가 없는 케이스
+
+SELECT tel
+FROM student
+--WHERE REGEXP_LIKE(tel, '^02\)[0-9]{3}-') --02)로 시작하는 케이스 ')'쓰려면 앞에 \넣어야함
+--WHERE REGEXP_LIKE(tel, '^02\)[0-9]{3,4}-') --{3,4} 3자리 또는 4자리
+WHERE REGEXP_LIKE(tel, '^01([0|1|6|7|8|9])-?{[0-9]{3,4}}-?{[0-9]{4}}$') 
+--휴대폰 번호를 식별하는 정규식
+-- -? 는 -있을거나 없거나
+--010-1234-5678
+--01012345678
+--010 011 016 017 018 019
