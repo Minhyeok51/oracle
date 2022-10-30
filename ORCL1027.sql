@@ -171,19 +171,11 @@ UPDATE HE_STUDENT
 SET stdno = stdno-100;
 commit;
 --2번 HE_STUDENT,HE_STUDENT2,HE_STUDENT3 모든 정보를 취합해서 보여주는 쿼리문 만들기
-select * from HE_STUDENT2;
-
-
-select *
-from HE_STUDENT s1 right outer join HE_STUDENT2 s2
-on s2.stdno= s1.stdno;
---full outer join HE_STUDENT3 s3
---on s2.stdno= s3.stdno;
---order by s1.stdno;
---where s1.stdno= s2.stdno(+)
---and s1.stdno = s3.stdno(+);
-
-select *
-from HE_STUDENT s1,HE_STUDENT2 s2,HE_STUDENT3 s3
-where rownum<10
-order by s1.stdno
+select stdno,name,ssn,id,null,reg_date 
+from HE_STUDENT
+union all
+select stdno,name,ssn,id,address,reg_date
+from HE_STUDENT2
+union all
+select stdno,name,ssn,id,address,reg_date
+from HE_STUDENT3;
