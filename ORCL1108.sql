@@ -17,14 +17,14 @@ SELECT NVL(MAX(no),0) +1 FROM t_covid19_status
 WHERE TO_CHAR(mmddhh,'YYYY-MM-DD') =TO_CHAR(sysdate,'YYYY-MM-DD');
 --delete from t_covid19_status ;
 
-drop table t_covid19_status;
+--drop table t_covid19_status;
 
 --추가 옵션용
 create table t_covid19_status(
-mmddhh date,
+status_date date,
 cnt_deaths number,
 cnt_severe_symptoms number,
 cnt_hospitalizations number,
 cnt_confirmations number,
-no date
+no number
 );
